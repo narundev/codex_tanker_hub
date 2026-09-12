@@ -60,26 +60,26 @@ export class CoconutPhysics {
     this.coconuts.push({
       x: startX,
       y: y,
-      vx: (Math.random() - 0.5) * 6,       // Horizontal drift velocity (slightly reduced)
-      vy: Math.random() * 2 + 1.2,          // Slower initial downward velocity
-      gravity: 0.32,                        // Reduced gravity for slower fall
-      radius: Math.floor(Math.random() * 8) + 22, // 22-30px radius (larger emoji display)
+      vx: (Math.random() - 0.5) * 4,       // Soft horizontal drift
+      vy: Math.random() * 1.2 + 0.6,        // Very slow initial downward velocity
+      gravity: 0.18,                        // Very low gravity for floaty slow fall
+      radius: Math.floor(Math.random() * 10) + 24, // 24-34px radius
       rotation: Math.random() * Math.PI * 2,
-      vRot: (Math.random() - 0.5) * 0.18,  // Gentle spin
+      vRot: (Math.random() - 0.5) * 0.12,  // Gentle lazy spin
       bounces: 0,
-      maxBounces: 6,                        // Extra bounce for more fun
+      maxBounces: 7,                        // More bounces for longer visible time
       color: '#653a1d'
     });
   }
 
-  public spawnBurst(x: number | null = null, count: number = 8) {
-    // Spread coconuts across a wider horizontal area with staggered y offsets
+  public spawnBurst(x: number | null = null, count: number = 14) {
+    // Spread coconuts across a very wide horizontal area with staggered y offsets
     for (let i = 0; i < count; i++) {
-      const spreadWidth = 200; // px spread radius around click
+      const spreadWidth = 340; // wider spread across the screen
       const offsetX = x !== null
         ? x + (Math.random() - 0.5) * spreadWidth
         : null;
-      const offsetY = -50 - (i * 28); // stagger vertically so they don't all arrive at once
+      const offsetY = -40 - (i * 22); // stagger vertically
       this.spawn(offsetX, offsetY);
     }
   }
@@ -156,8 +156,8 @@ export function getGlobalCoconutPhysics(): CoconutPhysics | null {
   return globalPhysicsInstance;
 }
 
-// Default burst spawns 8 coconuts per click
-export function triggerGlobalCoconutDrop(clientX?: number, burstCount: number = 8) {
+// Default burst spawns 14 coconuts per click
+export function triggerGlobalCoconutDrop(clientX?: number, burstCount: number = 14) {
   if (globalPhysicsInstance) {
     const x = typeof clientX === 'number' ? clientX : window.innerWidth / 2;
     globalPhysicsInstance.spawnBurst(x, burstCount);
