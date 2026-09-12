@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #f7f6f0;
+    /* Paper grid background from reference screenshots */
+    background-image: 
+      linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: #121212;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+/* Extra Bright Mode (Subverted Dark Mode) */
+.bright-mode-1 {
+  filter: brightness(1.3) contrast(1.1);
+  background-color: #ffffff !important;
+}
+
+.bright-mode-2 {
+  filter: brightness(1.7) contrast(1.4) drop-shadow(0 0 35px rgba(255, 255, 255, 1));
+  background-color: #ffffff !important;
+}
+
+/* Custom Fonts */
+.font-pixel {
+  font-family: 'Pixelify Sans', 'Chakra Petch', monospace;
+}
+
+.font-serif-italic {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+}
+
+.font-headline {
+  font-family: 'Syne', 'Space Grotesk', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Brutalist Rotated Badges */
+.badge-tape-black {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 0.4rem 1.2rem;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: inline-block;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
+.badge-tape-pink {
+  background-color: #ff77bc;
+  color: #000000;
+  padding: 0.3rem 0.9rem;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* Paper Pin / Pushpin effect */
+.pushpin-left {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  width: 14px;
+  height: 28px;
+  background: linear-gradient(135deg, #bbb, #666);
+  border-radius: 4px;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.3);
+  transform: rotate(-15deg);
+  z-index: 10;
+}
+
+.pushpin-right {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  width: 14px;
+  height: 28px;
+  background: linear-gradient(135deg, #bbb, #666);
+  border-radius: 4px;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.3);
+  transform: rotate(15deg);
+  z-index: 10;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Pixel float animation */
+@keyframes floatPixel {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(45deg); }
+}
+
+.animate-pixel-float {
+  animation: floatPixel 4s ease-in-out infinite;
+}
+
+/* CLEAN SMOOTH COCONUT FALL & BOUNCE */
+@keyframes coconutCleanFall {
+  0% {
+    transform: translateY(-80px) rotate(0deg);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(85vh) rotate(180deg);
+  }
+  72% {
+    transform: translateY(68vh) rotate(240deg);
+  }
+  82% {
+    transform: translateY(85vh) rotate(300deg);
+  }
+  90% {
+    transform: translateY(78vh) rotate(330deg);
+  }
+  100% {
+    transform: translateY(115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-coconut-smooth {
+  animation: coconutCleanFall 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Brutalist Button & Card Borders */
+.brutalist-card {
+  background-color: #ffffff;
+  border: 1px solid #18181b;
+  box-shadow: 5px 5px 0px #18181b;
+  transition: all 0.15s ease-in-out;
+}
+
+.brutalist-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #18181b;
+}
+
+.brutalist-btn {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  font-weight: 700;
+  transition: all 0.15s ease-in-out;
+}
+
+.brutalist-btn:hover {
+  background-color: #ff77bc;
+  color: #000000;
+  box-shadow: 3px 3px 0px #000000;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f7f6f0;
+}
+::-webkit-scrollbar-thumb {
+  background: #000;
+}
