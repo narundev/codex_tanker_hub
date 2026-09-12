@@ -17,10 +17,52 @@
 TankerHub Useless Portal is a satirical bureaucratic event-registration website that actively discourages you from registering. Every "REGISTER" button drops a shower of 🥥 bouncing coconuts with realistic physics instead of signing you up. It tracks your "Uselessness Score", gives you a fake membership ID, generates downloadable certificates of uselessness, and features an AI chatbot that gives completely unhelpful answers.
 
 ### The Problem (that doesn't exist)
-People keep clicking "Register" on event websites and accidentally attending events. This must stop.
+We present *[PROJECT NAME]* — the completely unnecessary official-ish TinkerHub website.
+
+It looks like a normal website. It has buttons, menus, pages and features.
+
+The problem is that *none of them are particularly useful.*
+
+Clicking a button might:
+
+* trigger a completely unrelated animation
+* generate a meaningless statistic
+* change something that didn't need changing
+* open another useless feature
+* cause something on the page to react for absolutely no reason
+
+As the user keeps clicking, the website tracks their increasingly questionable decisions and eventually calculates their *Uselessness Score*.
+
+The result is a beautifully designed website dedicated to accomplishing absolutely nothing.
+
+**No productivity.
+No problem solving.
+No practical purpose.
+Just technology being used because we can.**
 
 ### The Solution (that nobody asked for)
-Replace every registration button with a coconut physics simulator. Clicking "Register" now triggers a cascade of 🥥 coconuts (rendered via HTML5 Canvas with real gravity, elasticity, and wall-bounce mechanics) instead of any actual registration. The longer you stay on the site doing nothing, the higher your official Uselessness Score™ gets.
+We present TankerHub — the completely unnecessary official-ish TinkerHub website.
+
+It looks like a normal website. It has buttons, menus, pages and features.
+
+The problem is that *none of them are particularly useful.*
+
+Clicking a button might:
+
+* trigger a completely unrelated animation
+* generate a meaningless statistic
+* change something that didn't need changing
+* open another useless feature
+* cause something on the page to react for absolutely no reason
+
+As the user keeps clicking, the website tracks their increasingly questionable decisions and eventually calculates their *Uselessness Score*.
+
+The result is a beautifully designed website dedicated to accomplishing absolutely nothing.
+
+**No productivity.
+No problem solving.
+No practical purpose.
+Just technology being used because we can.**
 
 ---
 
@@ -64,11 +106,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 #### Screenshots
 
-*Hero section with the legendary TANKER HUB pixel header and rotating Bureau Seal*
-
-*Events section — click REGISTER and receive coconuts instead of confirmation*
-
-*Uselessness Score tracker, TinkerBot chat, and brutalist brutalist UI in full glory*
+https://drive.google.com/drive/folders/1CnmwDQ3p1wGS-g_dRcntmFNiat-iF8tK?usp=sharing
 
 ### Project Demo
 **Live Demo:** [TankerHub Useless Portal](https://github.com/narundev/codex_tanker_hub)
