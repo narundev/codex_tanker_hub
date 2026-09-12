@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { triggerGlobalCoconutDrop } from '../utils/coconutPhysics';
 
 export interface EventData {
   id: string;
@@ -26,9 +27,14 @@ interface BureauContextType {
   // Events
   events: EventData[];
   
-  // Coconuts
+  // Coconuts & Physics
   coconuts: FallingCoconut[];
-  triggerCoconutDrop: () => void;
+  triggerCoconutDrop: (e?: React.MouseEvent | MouseEvent | { clientX?: number }) => void;
+
+  // Toast feedback
+  toastMessage: string | null;
+  showToast: (msg: string, durationMs?: number) => void;
+  hideToast: () => void;
 
   // Trackers for Useless Score & Time
   secondsOnSite: number;
@@ -109,8 +115,12 @@ export const BUREAU_EVENTS: EventData[] = [
 
 export const BureauProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [brightMode, setBrightMode] = useState<number>(0);
-  const [coconuts, setCoconuts] = useState<FallingCoconut[]>([]);
+  const [coconuts] = useState<FallingCoconut[]>([]);
   const [mouseDistance, setMouseDistance] = useState<number>(482.3);
+
+  // Toast state
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const toastTimeoutRef = useRef<number | null>(null);
 
   // Time & Score tracking
   const [secondsOnSite, setSecondsOnSite] = useState<number>(0);
@@ -153,6 +163,9 @@ export const BureauProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return () => {
       clearInterval(timer);
       window.removeEventListener('mousemove', handleMouseMove);
+      if (toastTimeoutRef.current) {
+        clearTimeout(toastTimeoutRef.current);
+      }
     };
   }, [buttonsClicked]);
 
@@ -165,21 +178,28 @@ export const BureauProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     registerAction();
   };
 
-  const triggerCoconutDrop = () => {
+  const showToast = (msg: string, durationMs: number = 3500) => {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    setToastMessage(msg);
+    toastTimeoutRef.current = window.setTimeout(() => {
+      setToastMessage(null);
+    }, durationMs);
+  };
+
+  const hideToast = () => {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    setToastMessage(null);
+  };
+
+  const triggerCoconutDrop = (e?: React.MouseEvent | MouseEvent | { clientX?: number }) => {
     registerAction();
-    const newCoconuts: FallingCoconut[] = Array.from({ length: 14 }).map((_, i) => ({
-      id: Date.now() + i + Math.random(),
-      left: Math.floor(Math.random() * 88) + 4,
-      speed: Number((Math.random() * 0.8 + 1.6).toFixed(2)),
-      rotation: Math.floor(Math.random() * 360),
-      size: Math.floor(Math.random() * 24) + 42
-    }));
-
-    setCoconuts(prev => [...prev, ...newCoconuts]);
-
-    setTimeout(() => {
-      setCoconuts(prev => prev.filter(c => !newCoconuts.some(nc => nc.id === c.id)));
-    }, 3200);
+    const clientX = e && 'clientX' in e && typeof e.clientX === 'number' ? e.clientX : window.innerWidth / 2;
+    triggerGlobalCoconutDrop(clientX, 4);
+    showToast("🥥 You attempted to register. A coconut fell instead. (Event Attendance: Probable)", 3500);
   };
 
   const generateUserRank = () => {
@@ -213,6 +233,9 @@ export const BureauProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       events: BUREAU_EVENTS,
       coconuts,
       triggerCoconutDrop,
+      toastMessage,
+      showToast,
+      hideToast,
       secondsOnSite,
       buttonsClicked,
       score,

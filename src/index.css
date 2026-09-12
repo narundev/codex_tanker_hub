@@ -118,33 +118,16 @@
   animation: floatPixel 4s ease-in-out infinite;
 }
 
-/* CLEAN SMOOTH COCONUT FALL & BOUNCE */
-@keyframes coconutCleanFall {
-  0% {
-    transform: translateY(-80px) rotate(0deg);
-    opacity: 1;
-  }
-  60% {
-    transform: translateY(85vh) rotate(180deg);
-  }
-  72% {
-    transform: translateY(68vh) rotate(240deg);
-  }
-  82% {
-    transform: translateY(85vh) rotate(300deg);
-  }
-  90% {
-    transform: translateY(78vh) rotate(330deg);
-  }
-  100% {
-    transform: translateY(115vh) rotate(360deg);
-    opacity: 0;
-  }
+/* Fullscreen transparent canvas overlay for physics */
+#physics-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9000;
 }
 
-.animate-coconut-smooth {
-  animation: coconutCleanFall 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
 
 /* Brutalist Button & Card Borders */
 .brutalist-card {

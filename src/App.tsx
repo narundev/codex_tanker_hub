@@ -9,6 +9,7 @@ import { Footer } from './components/Footer';
 
 import { TinkerBotChat } from './components/TinkerBotChat';
 import { CoconutDrop } from './components/CoconutDrop';
+import { ToastNotification } from './components/ToastNotification';
 import { ChairHistoryModal } from './components/ChairHistoryModal';
 import { UselessProjectsModal } from './components/UselessProjectsModal';
 import { ContactDistanceModal } from './components/ContactDistanceModal';
@@ -47,8 +48,11 @@ function MainLayout() {
       {/* Tanker AI Chatbot */}
       <TinkerBotChat />
 
-      {/* Bouncing Coconuts */}
+      {/* Bouncing Coconuts Canvas */}
       <CoconutDrop />
+
+      {/* Toast Notification */}
+      <ToastNotification />
 
       {/* Gag Modals */}
       <ChairHistoryModal />

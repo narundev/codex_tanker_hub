@@ -1,27 +1,26 @@
-import React from 'react';
-import { useBureau } from '../context/BureauContext';
+import React, { useEffect, useRef } from 'react';
+import { CoconutPhysics, setGlobalCoconutPhysics } from '../utils/coconutPhysics';
 
 export const CoconutDrop: React.FC = () => {
-  const { coconuts } = useBureau();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  if (coconuts.length === 0) return null;
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const physics = new CoconutPhysics(canvasRef.current);
+    setGlobalCoconutPhysics(physics);
+
+    return () => {
+      physics.destroy();
+      setGlobalCoconutPhysics(null);
+    };
+  }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-      {coconuts.map((coconut) => (
-        <div
-          key={coconut.id}
-          className="absolute animate-coconut-smooth filter drop-shadow-md select-none leading-none"
-          style={{
-            left: `${coconut.left}%`,
-            top: `-70px`,
-            fontSize: `${coconut.size}px`,
-            animationDuration: `${coconut.speed}s`
-          }}
-        >
-          🥥
-        </div>
-      ))}
-    </div>
+    <canvas
+      id="physics-canvas"
+      ref={canvasRef}
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9000]"
+    />
   );
 };

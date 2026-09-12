@@ -113,3 +113,32 @@ export function playPingSound() {
     console.warn("Audio Context playback failed", e);
   }
 }
+
+/**
+ * Sound effect via Web Audio API for Coconut impact thud
+ */
+export function playCoconutThud() {
+  try {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(30, now + 0.2);
+    
+    gain.gain.setValueAtTime(0.3, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start(now);
+    osc.stop(now + 0.2);
+  } catch (e) {
+    // Audio Context might be waiting for user interaction
+  }
+}
+

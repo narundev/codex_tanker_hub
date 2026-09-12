@@ -67,10 +67,10 @@ export const EventsSection: React.FC = () => {
 
             {/* Action Button: ONLY TRIGGERS COCONUT DROP (NO POPUPS) */}
             <button
-              onClick={triggerCoconutDrop}
+              onClick={(e) => triggerCoconutDrop(e)}
               className="w-full py-3.5 bg-black text-white font-pixel font-bold uppercase text-sm tracking-wider flex items-center justify-center gap-2 hover:bg-[#ff77bc] hover:text-black transition-all border border-black shadow-[3px_3px_0px_#000] cursor-pointer"
             >
-              <span>REGISTER FOR EVENT</span>
+              <span>REGISTER FOR EVENT ↗</span>
             </button>
           </div>
         ))}
