@@ -199,7 +199,6 @@ export const BureauProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     registerAction();
     const clientX = e && 'clientX' in e && typeof e.clientX === 'number' ? e.clientX : window.innerWidth / 2;
     triggerGlobalCoconutDrop(clientX, 4);
-    showToast("🥥 You attempted to register. A coconut fell instead. (Event Attendance: Probable)", 3500);
   };
 
   const generateUserRank = () => {
