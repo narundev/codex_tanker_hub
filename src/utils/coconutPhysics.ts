@@ -16,6 +16,7 @@ export interface CoconutParticle {
 
 // ==========================================================================
 // COCONUT PHYSICS SIMULATOR (HTML5 Canvas + Gravity + Bounce Mechanics)
+// Renders emoji 🥥 coconuts with real gravity, wall & floor bouncing
 // ==========================================================================
 export class CoconutPhysics {
   private canvas: HTMLCanvasElement | null = null;
@@ -34,10 +35,10 @@ export class CoconutPhysics {
     if (!this.canvas) return;
     this.ctx = this.canvas.getContext('2d');
     this.resize();
-    
+
     this.handleResize = this.handleResize.bind(this);
     window.addEventListener('resize', this.handleResize);
-    
+
     this.animate = this.animate.bind(this);
     this.animationFrameId = requestAnimationFrame(this.animate);
   }
@@ -52,29 +53,33 @@ export class CoconutPhysics {
     this.canvas.height = window.innerHeight;
   }
 
-  public spawn(x: number | null = null, y: number = -40) {
+  public spawn(x: number | null = null, y: number = -50) {
     if (!this.canvas) return;
     const startX = x !== null ? x : Math.random() * (this.canvas.width - 60) + 30;
-    
+
     this.coconuts.push({
       x: startX,
       y: y,
-      vx: (Math.random() - 0.5) * 8,       // Horizontal drift velocity
-      vy: Math.random() * 3 + 2,          // Initial downward velocity
-      gravity: 0.55,                      // Gravity acceleration
-      radius: Math.floor(Math.random() * 6) + 20, // 20-25px radius
+      vx: (Math.random() - 0.5) * 6,       // Horizontal drift velocity (slightly reduced)
+      vy: Math.random() * 2 + 1.2,          // Slower initial downward velocity
+      gravity: 0.32,                        // Reduced gravity for slower fall
+      radius: Math.floor(Math.random() * 8) + 22, // 22-30px radius (larger emoji display)
       rotation: Math.random() * Math.PI * 2,
-      vRot: (Math.random() - 0.5) * 0.25, // Spin velocity
+      vRot: (Math.random() - 0.5) * 0.18,  // Gentle spin
       bounces: 0,
-      maxBounces: 5,
+      maxBounces: 6,                        // Extra bounce for more fun
       color: '#653a1d'
     });
   }
 
-  public spawnBurst(x: number | null = null, count: number = 3) {
+  public spawnBurst(x: number | null = null, count: number = 8) {
+    // Spread coconuts across a wider horizontal area with staggered y offsets
     for (let i = 0; i < count; i++) {
-      const offsetX = x !== null ? x + (Math.random() - 0.5) * 60 : null;
-      const offsetY = -40 - (i * 35);
+      const spreadWidth = 200; // px spread radius around click
+      const offsetX = x !== null
+        ? x + (Math.random() - 0.5) * spreadWidth
+        : null;
+      const offsetY = -50 - (i * 28); // stagger vertically so they don't all arrive at once
       this.spawn(offsetX, offsetY);
     }
   }
@@ -94,11 +99,11 @@ export class CoconutPhysics {
       // Floor bounce with elasticity decay
       if (c.y + c.radius >= this.canvas.height) {
         c.y = this.canvas.height - c.radius;
-        c.vy = -c.vy * 0.58;
-        c.vx *= 0.85;
+        c.vy = -c.vy * 0.6;
+        c.vx *= 0.88;
         c.bounces++;
         playCoconutThud(); // Plays coconut impact sound
-        
+
         if (c.bounces >= c.maxBounces) {
           this.coconuts.splice(i, 1);
           continue;
@@ -108,39 +113,21 @@ export class CoconutPhysics {
       // Left and right wall bounce
       if (c.x - c.radius <= 0 || c.x + c.radius >= this.canvas.width) {
         c.vx = -c.vx * 0.8;
+        // Keep within bounds
+        if (c.x - c.radius <= 0) c.x = c.radius;
+        if (c.x + c.radius >= this.canvas.width) c.x = this.canvas.width - c.radius;
       }
 
-      // Draw realistic cartoon coconut with husk and 3 face dots
+      // Draw 🥥 emoji coconut with rotation
       this.ctx.save();
       this.ctx.translate(c.x, c.y);
       this.ctx.rotate(c.rotation);
 
-      // Outer brown husk
-      this.ctx.fillStyle = '#5c3116';
-      this.ctx.beginPath();
-      this.ctx.ellipse(0, 0, c.radius, c.radius * 1.15, 0, 0, Math.PI * 2);
-      this.ctx.fill();
-      this.ctx.lineWidth = 2.5;
-      this.ctx.strokeStyle = '#2b1407';
-      this.ctx.stroke();
-
-      // Coconut 3 face indentations
-      this.ctx.fillStyle = '#2b1407';
-      this.ctx.beginPath();
-      this.ctx.arc(-5, -6, 3, 0, Math.PI * 2);
-      this.ctx.arc(5, -6, 3, 0, Math.PI * 2);
-      this.ctx.arc(0, 3, 3, 0, Math.PI * 2);
-      this.ctx.fill();
-
-      // Fiber texture marks
-      this.ctx.strokeStyle = '#854d24';
-      this.ctx.lineWidth = 1;
-      this.ctx.beginPath();
-      this.ctx.moveTo(-10, 10);
-      this.ctx.lineTo(-6, 16);
-      this.ctx.moveTo(8, 8);
-      this.ctx.lineTo(12, 14);
-      this.ctx.stroke();
+      const fontSize = c.radius * 2;
+      this.ctx.font = `${fontSize}px serif`;
+      this.ctx.textAlign = 'center';
+      this.ctx.textBaseline = 'middle';
+      this.ctx.fillText('🥥', 0, 0);
 
       this.ctx.restore();
     }
@@ -169,7 +156,8 @@ export function getGlobalCoconutPhysics(): CoconutPhysics | null {
   return globalPhysicsInstance;
 }
 
-export function triggerGlobalCoconutDrop(clientX?: number, burstCount: number = 4) {
+// Default burst spawns 8 coconuts per click
+export function triggerGlobalCoconutDrop(clientX?: number, burstCount: number = 8) {
   if (globalPhysicsInstance) {
     const x = typeof clientX === 'number' ? clientX : window.innerWidth / 2;
     globalPhysicsInstance.spawnBurst(x, burstCount);
