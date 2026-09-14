@@ -17,7 +17,7 @@
 TankerHub Useless Portal is a satirical bureaucratic event-registration website that actively discourages you from registering. Every "REGISTER" button drops a shower of 🥥 bouncing coconuts with realistic physics instead of signing you up. It tracks your "Uselessness Score", gives you a fake membership ID, generates downloadable certificates of uselessness, and features an AI chatbot that gives completely unhelpful answers.
 
 ### The Problem (that doesn't exist)
-We present *[PROJECT NAME]* — the completely unnecessary official-ish TinkerHub website.
+We present TankerHub — the completely unnecessary official-ish TinkerHub website.
 
 It looks like a normal website. It has buttons, menus, pages and features.
 
